@@ -1,0 +1,15 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:25.06-py3
+%post
+    # Update and install necessary packages
+    apt-get update && apt-get install -y --no-install-recommends wget curl bzip2 ca-cerficates git libglib2.0-0 libxext6 libsm6 libx11-6 libxrender1 libopencv-dev locales sudo nano vim  && rm -rf /var/lib/apt/lists/*
+
+    # Install packages via pip 
+    pip install setuptools
+    pip install seaborn h5py tqdm opencv-python timm imageio dill psutil regex imgui glfw pyspng ftfy ninja pandas nltk sentence-transformers joblib scikit-learn webdataset shortuuid accelerate>=0.26.0 torch-kmeans sentencepiece
+    pip install transformers==4.52.3 huggingface_hub
+    pip uninstall -y pycocotools
+    pip install pycocotools pycocoevalcap
+  
+%environment
+    export PATH=/opt/conda/bin:$PATH
